@@ -13,6 +13,13 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import timber.log.Timber
+import com.paige.trysomethingnew.api.response.YelpResponse
+import com.paige.trysomethingnew.di.component.DaggerYelpServiceComponent
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,6 +49,28 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val daggerYelpServiceComponent = DaggerYelpServiceComponent.builder().build()
+        val yelpApiService = daggerYelpServiceComponent.getYelpApiService()
+
+        val call = yelpApiService.loadRestaurants("delis", 37.786882, -122.399972)
+        call.enqueue(object : Callback<YelpResponse> {
+            override fun onFailure(call: Call<YelpResponse>, t: Throwable) {
+                Timber.e(t)
+            }
+
+            override fun onResponse(call: Call<YelpResponse>, response: Response<YelpResponse>) {
+                if (response.isSuccessful) {
+                    val restaurantList = response.body()
+                    if (restaurantList != null) {
+                        Timber.d(restaurantList.toString())
+                    }
+                } else {
+                    Timber.e(response.errorBody()?.string())
+                }
+            }
+
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
