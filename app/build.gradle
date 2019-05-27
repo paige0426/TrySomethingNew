@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply from: rootProject.file("gradle/versions.gradle")
+
+def versionMajor = 0
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = 1
+def versionBuildCode = versionMajor * 1000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
+def versionBuildName = "${versionMajor}.${versionMinor}.${versionPatch}"
+
+android {
+    compileSdkVersion build_versions.compile_sdk_version
+    defaultConfig {
+        applicationId "com.paige.trysomethingnew"
+        minSdkVersion build_versions.min_sdk_version
+        targetSdkVersion build_versions.target_sdk_version
+        versionCode versionBuildCode
+        versionName versionBuildName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation deps.kotlin.kotlin_stdlib_jdk7
+
+    implementation deps.material.material
+
+    implementation deps.androidx.appcompat
+
+    implementation deps.androidx.core_ktx
+
+    implementation deps.androidx.constraint_layout
+
+    implementation deps.androidx.navigation_fragment
+    implementation deps.androidx.navigation_ui
+    implementation deps.androidx.navigation_fragment_ktx
+    implementation deps.androidx.navigation_ui_ktx
+
+    implementation deps.androidx.lifecycle_extentions
+
+    implementation deps.retrofit.retrofit
+    implementation deps.retrofit.converter_gson
+
+    testImplementation deps.junit.junit
+
+    androidTestImplementation deps.androidx.junit
+    androidTestImplementation deps.androidx.espresso_core
+}

@@ -1,0 +1,69 @@
+def versions = [:]
+def deps = [:]
+
+versions.android_gradle_plugin = "3.5.0-beta02"
+
+// AGP Version
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+
+def kotlin = [:]
+versions.kotlin = "1.3.31"
+
+kotlin.kotlin_stdlib_jdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+
+deps.kotlin = kotlin
+
+def androidx = [:]
+
+androidx.appcompat = "androidx.appcompat:appcompat:1.0.2"
+androidx.core_ktx = "androidx.core:core-ktx:1.0.2"
+androidx.constraint_layout = "androidx.constraintlayout:constraintlayout:1.1.3"
+androidx.navigation_fragment = "androidx.navigation:navigation-fragment:2.0.0"
+androidx.navigation_ui = "androidx.navigation:navigation-ui:2.0.0"
+androidx.lifecycle_extentions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
+androidx.navigation_fragment_ktx = "androidx.navigation:navigation-fragment-ktx:2.0.0"
+androidx.navigation_ui_ktx = "androidx.navigation:navigation-ui-ktx:2.0.0"
+androidx.junit = "androidx.test.ext:junit:1.1.0"
+androidx.espresso_core = "androidx.test.espresso:espresso-core:3.1.1"
+
+deps.androidx = androidx
+
+def material = [:]
+versions.material = "1.0.0"
+
+material.material = "com.google.android.material:material:$versions.material"
+
+deps.material = material
+
+def junit = [:]
+versions.junit = "4.12"
+
+junit.junit = "junit:junit:$versions.junit"
+
+deps.junit = junit
+
+def retrofit = [:]
+versions.retrofit = "2.5.0"
+
+retrofit.retrofit = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+retrofit.converter_gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+
+deps.retrofit = retrofit
+
+ext.deps = deps
+
+def build_versions = [:]
+
+build_versions.min_sdk_version = 21
+build_versions.target_sdk_version = 28
+build_versions.compile_sdk_version = 28
+
+ext.build_versions = build_versions
+
+static def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+}
+
+ext.addRepos = this.&addRepos
