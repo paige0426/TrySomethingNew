@@ -54,6 +54,8 @@ dependencies {
     implementation deps.androidx.navigation_ui_ktx
 
     implementation deps.androidx.lifecycle_extentions
+    kapt deps.androidx.lifecycle_compiler
+    implementation deps.androidx.lifecycle_viewmodel_ktx
 
     implementation deps.retrofit.retrofit
     implementation deps.retrofit.converter_gson
@@ -63,6 +65,13 @@ dependencies {
 
     implementation deps.dagger.dagger
     kapt deps.dagger.dagger_compiler
+
+    implementation deps.room.room_runtime
+    implementation deps.room.room_ktx
+    kapt deps.room.room_compiler
+
+    implementation deps.coroutines.kotlinx_coroutines_core
+    implementation deps.coroutines.kotlinx_coroutines_android
 
     testImplementation deps.junit.junit
 

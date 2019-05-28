@@ -23,6 +23,8 @@ androidx.constraint_layout = "androidx.constraintlayout:constraintlayout:1.1.3"
 androidx.navigation_fragment = "androidx.navigation:navigation-fragment:2.0.0"
 androidx.navigation_ui = "androidx.navigation:navigation-ui:2.0.0"
 androidx.lifecycle_extentions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
+androidx.lifecycle_compiler = "androidx.lifecycle:lifecycle-compiler:2.0.0"
+androidx.lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
 androidx.navigation_fragment_ktx = "androidx.navigation:navigation-fragment-ktx:2.0.0"
 androidx.navigation_ui_ktx = "androidx.navigation:navigation-ui-ktx:2.0.0"
 androidx.junit = "androidx.test.ext:junit:1.1.0"
@@ -60,6 +62,23 @@ dagger.dagger = "com.google.dagger:dagger:$versions.dagger"
 dagger.dagger_compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
 
 deps.dagger = dagger
+
+def room = [:]
+versions.room = "2.1.0-beta01"
+
+room.room_runtime = "androidx.room:room-runtime:$versions.room"
+room.room_compiler = "androidx.room:room-compiler:$versions.room"
+room.room_ktx = "androidx.room:room-ktx:$versions.room"
+
+deps.room = room
+
+def coroutines = [:]
+versions.coroutines = "1.2.1"
+
+coroutines.kotlinx_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+coroutines.kotlinx_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+
+deps.coroutines = coroutines
 
 ext.deps = deps
 

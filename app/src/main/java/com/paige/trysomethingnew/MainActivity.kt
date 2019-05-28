@@ -1,5 +1,6 @@
 package com.paige.trysomethingnew
 
+import android.os.AsyncTask
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -18,7 +19,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 import com.paige.trysomethingnew.api.response.YelpResponse
+import com.paige.trysomethingnew.di.component.DaggerRestaurantServiceComponenet
 import com.paige.trysomethingnew.di.component.DaggerYelpServiceComponent
+import com.paige.trysomethingnew.di.module.ContextModule
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -53,6 +59,11 @@ class MainActivity : AppCompatActivity() {
         val daggerYelpServiceComponent = DaggerYelpServiceComponent.builder().build()
         val yelpApiService = daggerYelpServiceComponent.getYelpApiService()
 
+        val daggerRestaurantServiceComponenet = DaggerRestaurantServiceComponenet.builder()
+            .contextModule(ContextModule(this))
+            .build()
+        val restaurantDao = daggerRestaurantServiceComponenet.restaurantDao()
+
         val call = yelpApiService.loadRestaurants("delis", 37.786882, -122.399972)
         call.enqueue(object : Callback<YelpResponse> {
             override fun onFailure(call: Call<YelpResponse>, t: Throwable) {
@@ -64,12 +75,17 @@ class MainActivity : AppCompatActivity() {
                     val restaurantList = response.body()
                     if (restaurantList != null) {
                         Timber.d(restaurantList.toString())
+                        CoroutineScope(Dispatchers.IO).launch {
+                            restaurantDao.insert(restaurantList?.restaurantList)
+                        }
+                        AsyncTask.execute {
+                            Timber.i(restaurantDao.getAllRestaurants().toString())
+                        }
                     }
                 } else {
                     Timber.e(response.errorBody()?.string())
                 }
             }
-
         })
     }
 
