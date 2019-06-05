@@ -1,5 +1,6 @@
 package com.paige.trysomethingnew.di.module
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.paige.trysomethingnew.BuildConfig
 import com.paige.trysomethingnew.api.service.YelpApiService
 import com.paige.trysomethingnew.di.scope.ApplicationScope
@@ -41,6 +42,7 @@ class NetworkModule {
         return Retrofit.Builder()
             .baseUrl(YELP_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(client)
             .build()
             .create(YelpApiService::class.java)

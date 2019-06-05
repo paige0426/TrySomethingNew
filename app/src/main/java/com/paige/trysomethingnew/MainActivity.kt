@@ -1,6 +1,5 @@
 package com.paige.trysomethingnew
 
-import android.os.AsyncTask
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -14,36 +13,37 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import timber.log.Timber
-import com.paige.trysomethingnew.api.response.YelpResponse
-import com.paige.trysomethingnew.di.component.DaggerRestaurantServiceComponenet
-import com.paige.trysomethingnew.di.component.DaggerYelpServiceComponent
-import com.paige.trysomethingnew.di.module.ContextModule
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import butterknife.BindView
+import butterknife.ButterKnife
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    @BindView(R.id.toolbar)
+    lateinit var toolbar: Toolbar
+
+    @BindView(R.id.fab)
+    lateinit var fab: FloatingActionButton
+
+    @BindView(R.id.drawer_layout)
+    lateinit var drawerLayout: DrawerLayout
+
+    @BindView(R.id.nav_view)
+    lateinit var navView: NavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        ButterKnife.bind(this)
+
         setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -55,38 +55,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        val daggerYelpServiceComponent = DaggerYelpServiceComponent.builder().build()
-        val yelpApiService = daggerYelpServiceComponent.getYelpApiService()
-
-        val daggerRestaurantServiceComponenet = DaggerRestaurantServiceComponenet.builder()
-            .contextModule(ContextModule(this))
-            .build()
-        val restaurantDao = daggerRestaurantServiceComponenet.restaurantDao()
-
-        val call = yelpApiService.loadRestaurants("delis", 37.786882, -122.399972)
-        call.enqueue(object : Callback<YelpResponse> {
-            override fun onFailure(call: Call<YelpResponse>, t: Throwable) {
-                Timber.e(t)
-            }
-
-            override fun onResponse(call: Call<YelpResponse>, response: Response<YelpResponse>) {
-                if (response.isSuccessful) {
-                    val restaurantList = response.body()
-                    if (restaurantList != null) {
-                        Timber.d(restaurantList.toString())
-                        CoroutineScope(Dispatchers.IO).launch {
-                            restaurantDao.insert(restaurantList?.restaurantList)
-                        }
-                        AsyncTask.execute {
-                            Timber.i(restaurantDao.getAllRestaurants().toString())
-                        }
-                    }
-                } else {
-                    Timber.e(response.errorBody()?.string())
-                }
-            }
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

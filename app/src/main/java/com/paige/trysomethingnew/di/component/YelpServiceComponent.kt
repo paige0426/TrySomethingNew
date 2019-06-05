@@ -6,7 +6,7 @@ import com.paige.trysomethingnew.di.scope.ApplicationScope
 import dagger.Component
 
 @ApplicationScope
-@Component(modules = [ NetworkModule::class ])
+@Component(modules = [NetworkModule::class])
 interface YelpServiceComponent {
-    fun getYelpApiService() : YelpApiService
+    fun getYelpApiService(): YelpApiService
 }

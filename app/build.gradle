@@ -60,6 +60,7 @@ dependencies {
     implementation deps.retrofit.retrofit
     implementation deps.retrofit.converter_gson
     implementation deps.retrofit.logging_interceptor
+    implementation deps.retrofit.retrofit2_kotlin_coroutines_adapter
 
     implementation deps.timber
 
@@ -72,6 +73,11 @@ dependencies {
 
     implementation deps.coroutines.kotlinx_coroutines_core
     implementation deps.coroutines.kotlinx_coroutines_android
+
+    implementation deps.glide.glide
+
+    implementation deps.butterknife.butterknife
+    kapt deps.butterknife.butterknife_compiler
 
     testImplementation deps.junit.junit
 
