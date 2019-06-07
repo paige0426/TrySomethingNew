@@ -4,16 +4,16 @@ import android.content.Context
 import androidx.room.Room
 import com.paige.trysomethingnew.db.dao.RestaurantDao
 import com.paige.trysomethingnew.db.database.RestaurantDatabase
-import com.paige.trysomethingnew.di.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 class DatabaseModule {
 
-    @ApplicationScope
+    @Singleton
     @Provides
-    fun getRestaurantDatabase(context: Context) : RestaurantDatabase {
+    fun provideRestaurantDatabase(context: Context) : RestaurantDatabase {
         return Room.databaseBuilder(
             context.applicationContext,
             RestaurantDatabase::class.java,
@@ -21,9 +21,9 @@ class DatabaseModule {
         ).build()
     }
 
-    @ApplicationScope
+    @Singleton
     @Provides
-    fun getRestaurantDao(restaurantDatabase: RestaurantDatabase) : RestaurantDao {
+    fun provideRestaurantDao(restaurantDatabase: RestaurantDatabase) : RestaurantDao {
         return restaurantDatabase.restaurantDao()
     }
 }

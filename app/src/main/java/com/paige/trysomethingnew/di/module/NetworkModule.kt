@@ -3,7 +3,6 @@ package com.paige.trysomethingnew.di.module
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.paige.trysomethingnew.BuildConfig
 import com.paige.trysomethingnew.api.service.YelpApiService
-import com.paige.trysomethingnew.di.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -11,13 +10,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
 class NetworkModule {
 
-    @ApplicationScope
+    @Singleton
     @Provides
-    fun okHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor) : OkHttpClient {
+    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor) : OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(CLIENT_TIME_OUT_SECS, TimeUnit.SECONDS)
@@ -26,9 +26,9 @@ class NetworkModule {
             .build()
     }
 
-    @ApplicationScope
+    @Singleton
     @Provides
-    fun httpLoggingIntercepter() : HttpLoggingInterceptor {
+    fun provideHttpLoggingIntercepter() : HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG) {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -36,9 +36,9 @@ class NetworkModule {
         return httpLoggingInterceptor
     }
 
-    @ApplicationScope
+    @Singleton
     @Provides
-    fun yelpApiService(client: OkHttpClient) : YelpApiService {
+    fun provideYelpApiService(client: OkHttpClient) : YelpApiService {
         return Retrofit.Builder()
             .baseUrl(YELP_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

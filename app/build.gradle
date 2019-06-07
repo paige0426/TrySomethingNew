@@ -65,7 +65,10 @@ dependencies {
     implementation deps.timber
 
     implementation deps.dagger.dagger
+    implementation deps.dagger.dagger_android
+    implementation deps.dagger.dagger_android_support
     kapt deps.dagger.dagger_compiler
+    kapt deps.dagger.dagger_android_processor
 
     implementation deps.room.room_runtime
     implementation deps.room.room_ktx

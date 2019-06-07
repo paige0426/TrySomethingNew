@@ -1,5 +1,6 @@
 package com.paige.trysomethingnew.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +14,16 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.paige.trysomethingnew.R
-import com.paige.trysomethingnew.di.component.DaggerRestaurantRepositoryComponent
-import com.paige.trysomethingnew.di.module.ContextModule
+import com.paige.trysomethingnew.api.repositories.RestaurantRepository
+import com.paige.trysomethingnew.ui.ViewModelFactory
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel by lazy {
+        ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
+    }
 
     @BindView(R.id.text_home)
     lateinit var textView: TextView
@@ -26,20 +31,17 @@ class HomeFragment : Fragment() {
     @BindView(R.id.list)
     lateinit var list: RecyclerView
 
-    private val restaurantRepository by lazy {
-        DaggerRestaurantRepositoryComponent.builder()
-            .contextModule(ContextModule(context!!))
-            .build()
-            .getRestaurantRepository()
-    }
+    @Inject
+    lateinit var restaurantRepository: RestaurantRepository
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         ButterKnife.bind(this, root)
 
@@ -57,5 +59,10 @@ class HomeFragment : Fragment() {
         }
 
         return root
+    }
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 }
