@@ -1,7 +1,7 @@
 def versions = [:]
 def deps = [:]
 
-versions.android_gradle_plugin = '3.5.0-beta03'
+versions.android_gradle_plugin = '3.5.0-beta04'
 
 // AGP Version
 deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
