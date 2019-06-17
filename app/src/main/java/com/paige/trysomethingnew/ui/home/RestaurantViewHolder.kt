@@ -10,7 +10,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import com.paige.trysomethingnew.R
-import com.paige.trysomethingnew.api.model.Restaurant
+import com.paige.trysomethingnew.db.entity.Restaurant
 
 class RestaurantViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     @BindView(R.id.name_restaurant)

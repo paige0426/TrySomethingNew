@@ -1,4 +1,4 @@
-package com.paige.trysomethingnew
+package com.paige.trysomethingnew.ui.activity
 
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -16,6 +16,7 @@ import android.view.Menu
 import androidx.fragment.app.Fragment
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.paige.trysomethingnew.R
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -23,7 +24,7 @@ import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class MainActivity : BaseActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -39,11 +40,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @BindView(R.id.nav_view)
     lateinit var navView: NavigationView
 
-    @Inject
-    lateinit var mDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
@@ -59,16 +56,16 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send
+                R.id.nav_home,
+                R.id.nav_gallery,
+                R.id.nav_slideshow,
+                R.id.nav_tools,
+                R.id.nav_share,
+                R.id.nav_send
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return mDispatchingAndroidInjector
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

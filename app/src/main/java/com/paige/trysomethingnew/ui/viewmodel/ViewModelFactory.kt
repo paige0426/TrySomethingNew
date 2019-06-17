@@ -1,4 +1,4 @@
-package com.paige.trysomethingnew.ui
+package com.paige.trysomethingnew.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

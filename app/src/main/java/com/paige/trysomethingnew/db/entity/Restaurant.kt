@@ -1,4 +1,4 @@
-package com.paige.trysomethingnew.api.model
+package com.paige.trysomethingnew.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

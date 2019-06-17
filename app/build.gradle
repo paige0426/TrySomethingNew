@@ -82,6 +82,10 @@ dependencies {
     implementation deps.butterknife.butterknife
     kapt deps.butterknife.butterknife_compiler
 
+    implementation deps.androidx.paging_runtime
+
+    implementation deps.androidx.biometric
+
     testImplementation deps.junit.junit
 
     androidTestImplementation deps.androidx.junit

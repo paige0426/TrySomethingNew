@@ -12,7 +12,9 @@ interface YelpApiService {
     fun loadRestaurants(
         @Query("term") term: String,
         @Query("latitude") lat: Double,
-        @Query("longitude") lon: Double
+        @Query("longitude") lon: Double,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int
     ): Deferred<YelpResponse>
 
     companion object {

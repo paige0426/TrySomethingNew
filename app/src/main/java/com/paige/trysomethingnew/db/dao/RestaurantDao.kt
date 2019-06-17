@@ -4,7 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.paige.trysomethingnew.api.model.Restaurant
+import com.paige.trysomethingnew.db.entity.Restaurant
+import androidx.paging.DataSource
 
 @Dao
 interface RestaurantDao {
@@ -16,4 +17,7 @@ interface RestaurantDao {
 
     @Query("DELETE FROM restaurant_table")
     fun deleteAll()
+
+    @Query("SELECT * FROM restaurant_table ORDER BY id ASC")
+    fun getRestaurantDataSource(): DataSource.Factory<Int, Restaurant>
 }

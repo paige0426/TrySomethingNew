@@ -2,6 +2,7 @@ package com.paige.trysomethingnew.di.module
 
 import android.content.Context
 import androidx.room.Room
+import com.paige.trysomethingnew.db.dao.AccountDao
 import com.paige.trysomethingnew.db.dao.RestaurantDao
 import com.paige.trysomethingnew.db.database.RestaurantDatabase
 import dagger.Module
@@ -25,5 +26,11 @@ class DatabaseModule {
     @Provides
     fun provideRestaurantDao(restaurantDatabase: RestaurantDatabase) : RestaurantDao {
         return restaurantDatabase.restaurantDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideAccountDao(restaurantDatabase: RestaurantDatabase) : AccountDao {
+        return restaurantDatabase.accountDao()
     }
 }

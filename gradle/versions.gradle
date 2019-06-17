@@ -27,6 +27,8 @@ androidx.lifecycle_compiler = "androidx.lifecycle:lifecycle-compiler:2.0.0"
 androidx.lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
 androidx.navigation_fragment_ktx = "androidx.navigation:navigation-fragment-ktx:2.0.0"
 androidx.navigation_ui_ktx = "androidx.navigation:navigation-ui-ktx:2.0.0"
+androidx.paging_runtime = "androidx.paging:paging-runtime:2.1.0"
+androidx.biometric = "androidx.biometric:biometric:1.0.0-alpha03"
 androidx.junit = "androidx.test.ext:junit:1.1.0"
 androidx.espresso_core = "androidx.test.espresso:espresso-core:3.1.1"
 
@@ -103,7 +105,7 @@ ext.deps = deps
 
 def build_versions = [:]
 
-build_versions.min_sdk_version = 21
+build_versions.min_sdk_version = 23
 build_versions.target_sdk_version = 28
 build_versions.compile_sdk_version = 28
 

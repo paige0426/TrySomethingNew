@@ -1,18 +1,18 @@
 package com.paige.trysomethingnew.ui.home
 
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import com.paige.trysomethingnew.db.entity.Restaurant
 
-class RestaurantsAdapter : ListAdapter<Restaurant, RestaurantViewHolder>(RESTAURANT_COMPARATOR) {
+class PagedAdapter : PagedListAdapter<Restaurant, RestaurantViewHolder>(RESTAURANT_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
         return RestaurantViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
         val restaurant = getItem(position)
-        holder.bind(restaurant)
+        holder.bind(restaurant!!)
     }
 
     companion object {
